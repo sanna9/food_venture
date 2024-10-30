@@ -1,0 +1,11 @@
+# Ignore Parcel cache
+.parcel-cache/
+
+# Ignore distribution folder
+dist/
+
+# Ignore node modules
+node_modules/
+
+# Ignore package-lock.json
+package-lock.json
