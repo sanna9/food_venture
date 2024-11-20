@@ -1,10 +1,12 @@
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
 import { Link } from "react-router-dom"; // Import Link from react-router-dom
 import { LOGO_URL } from "../utils/constants";
 import useOnlineStatus from "../utils/useOnlineStatus";
+import userContext from "../utils/userContext";
 
 function Header() {
   const [btnName, setBtnName] = useState("Login");
+  const { loggedInUser } = useContext(userContext);
 
   const loginToggle = () => {
     setBtnName((prevState) => (prevState === "Login" ? "Logout" : "Login"));
@@ -30,7 +32,7 @@ function Header() {
             <li>
               <Link to="/grocery">Grocery</Link>
             </li>
-            <li>Cart</li>
+            <li>Cart {loggedInUser}</li>
             <li>
               <button onClick={loginToggle} className="login-btn">
                 {btnName}

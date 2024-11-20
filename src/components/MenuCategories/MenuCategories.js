@@ -2,7 +2,7 @@ import React from "react";
 import MenuItem from "../MenuItem/MenuItem";
 
 const MenuCategories = ({ nestedCategories, itemCards }) => (
-  <div>
+  <div className="w-6/12 mx-auto">
     {nestedCategories?.map((nestedCategory, index) => (
       <div key={index}>
         <h3>
@@ -19,7 +19,10 @@ const MenuCategories = ({ nestedCategories, itemCards }) => (
 
     <ul>
       {itemCards?.map((itemCard) => (
-        <MenuItem itemInfo={itemCard?.card?.info} />
+        <MenuItem
+          key={itemCard?.card?.info?.name}
+          itemInfo={itemCard?.card?.info}
+        />
       ))}
     </ul>
   </div>

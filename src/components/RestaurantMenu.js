@@ -2,16 +2,26 @@ import Shimmer from "./Shimmer";
 import MenuCategories from "./MenuCategories/MenuCategories";
 import { useParams } from "react-router-dom";
 import useRestrauntMenu from "../utils/useRestrauntMenu";
+import { useEffect, useState } from "react";
+import RestaurantCategory from "./RestaurantCategory";
 
 const RestaurantMenu = () => {
   const { resId } = useParams();
+  const [activeIndex, setActiveIndex] = useState(2);
 
   const resInfo = useRestrauntMenu(resId);
   if (resInfo === null) return <Shimmer />;
   const resCards = resInfo?.cards;
-  console.log("resCards", resInfo);
 
   const resName = resInfo?.cards[0]?.card?.card?.text;
+  const menuCategories = resCards
+    ?.map((cardGroup) => cardGroup?.groupedCard?.cardGroupMap?.REGULAR?.cards)
+    .filter((card) => card !== undefined)
+    .flat();
+
+  const handleToggle = (catIndex) => {
+    setActiveIndex(activeIndex === catIndex ? null : catIndex);
+  };
 
   return (
     <div>
@@ -20,30 +30,20 @@ const RestaurantMenu = () => {
       {resCards?.length === 0 ? (
         <p>No menu items available.</p>
       ) : (
-        resCards.map((cardGroup, index) => {
-          const categories =
-            cardGroup?.groupedCard?.cardGroupMap?.REGULAR?.cards;
-
-          return (
-            <div key={index}>
-              {categories?.map((category, catIndex) => {
-                return (
-                  <div key={catIndex}>
-                    <h2>
-                      {category?.card?.card?.title}-{" "}
-                      {category?.card?.card?.itemCards?.length}
-                    </h2>
-
-                    <MenuCategories
-                      nestedCategories={category?.card?.card?.categories}
-                      itemCards={category?.card?.card?.itemCards}
-                    />
-                  </div>
-                );
-              })}
-            </div>
-          );
-        })
+        <div>
+          {menuCategories?.map((category, catIndex) => {
+            return (
+              <div key={catIndex}>
+                <RestaurantCategory
+                  key={catIndex}
+                  card={category?.card?.card}
+                  isActive={activeIndex === catIndex ? true : false}
+                  onToggle={() => handleToggle(catIndex)}
+                />
+              </div>
+            );
+          })}
+        </div>
       )}
     </div>
   );

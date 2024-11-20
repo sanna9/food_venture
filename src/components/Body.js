@@ -1,13 +1,16 @@
-import React, { useEffect, useState } from "react";
-import RestaurantCard from "./RestaurantCard";
+import React, { useEffect, useState, useContext } from "react";
+import RestaurantCard, { withPromotedLabel } from "./RestaurantCard";
 import Shimmer from "./Shimmer";
 import { Link } from "react-router-dom";
 import useOnlineStatus from "../utils/useOnlineStatus";
+import userContext from "../utils/userContext";
 
 function Body() {
   const [listOfRes, setListOfRes] = useState([]);
   const [searchText, setSearchText] = useState("");
   const [filteredRestaurant, setFilteredRestaurant] = useState([]);
+  const RestaurantCardPromoted = withPromotedLabel(RestaurantCard);
+  const { loggedInUser, setUserName } = useContext(userContext);
 
   const topRes = () => {
     const filteredResList = listOfRes.filter((res) => res.info.avgRating > 4);
@@ -39,7 +42,6 @@ function Body() {
 
     setFilteredRestaurant(filteredRes);
   };
-  console.log("filteredRestaurant", filteredRestaurant);
 
   return listOfRes?.length === 0 || filteredRestaurant?.length === 0 ? (
     <Shimmer />
@@ -58,6 +60,13 @@ function Body() {
         <button className="filter-btn" onClick={topRes}>
           Top Rated Restaurants
         </button>
+
+        {/* changing the usename using useContext on whole app */}
+        <input
+          className="border border-black p-2"
+          value={loggedInUser || ""}
+          onChange={(e) => setUserName(e.target.value)}
+        />
       </div>
 
       <div className="res-container flex flex-wrap">
@@ -66,7 +75,11 @@ function Body() {
             key={restaurant?.info?.id}
             to={"/restaurants/" + restaurant?.info?.id}
           >
-            <RestaurantCard resData={restaurant?.info} />
+            {restaurant.info.promoted ? (
+              <RestaurantCardPromoted resData={restaurant?.info} />
+            ) : (
+              <RestaurantCard resData={restaurant?.info} />
+            )}
           </Link>
         ))}
       </div>
