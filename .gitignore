@@ -9,3 +9,8 @@ node_modules/
 
 # Ignore package-lock.json
 package-lock.json
+
+/coverage
+
+#The coverage folder appears in your project after running Jest tests because Jest generates a code coverage report. This report shows which parts of your code were executed during testing, helping you identify untested or under-tested areas.
+#exclude it from adding to git,it will keep the git repo clean
