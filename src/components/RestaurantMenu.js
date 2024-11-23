@@ -24,9 +24,9 @@ const RestaurantMenu = () => {
   };
 
   return (
-    <div>
-      <h1>Menu</h1>
-      <h2>{resName}</h2>
+    <div className="text-center mx-auto mt-8">
+      <h1 className="text-2xl font-bold">Menu</h1>
+      <h2 className="text-lg font-semibold mb-8">{resName}</h2>
       {resCards?.length === 0 ? (
         <p>No menu items available.</p>
       ) : (

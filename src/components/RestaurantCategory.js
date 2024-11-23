@@ -10,7 +10,7 @@ function RestaurantCategory({ card, isActive, onToggle }) {
     <>
       {itemCount && (
         <div
-          className="flex w-6/12 mx-auto my-4 bg-gray-50 shadow-lg p-4 justify-between"
+          className="flex w-6/12 mx-auto my-4 bg-gray-50 shadow-sm p-4 justify-between cursor-pointer mb-4"
           onClick={onToggle}
         >
           <h2>

@@ -5,6 +5,7 @@ import Contact from "../components/Contact"; // The Contact component
 import RestaurantMenu from "../components/RestaurantMenu";
 import { lazy, Suspense } from "react";
 import Shimmer from "../components/Shimmer";
+import Cart from "../components/Cart";
 
 const Grocery = lazy(() => import("../components/Grocery"));
 
@@ -32,6 +33,10 @@ const config = [
         <Grocery />
       </Suspense>
     ),
+  },
+  {
+    path: "/cart",
+    element: <Cart />,
   },
 ];
 
